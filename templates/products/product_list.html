@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Products</h2>
+
+<form method="get" style="margin-bottom:20px;">
+    <label>Sort by:</label>
+    <select name="sort" onchange="this.form.submit()">
+        <option value="">Default</option>
+        <option value="price_low" {% if sort == 'price_low' %}selected{% endif %}>
+            Price: Low to High
+        </option>
+        <option value="price_high" {% if sort == 'price_high' %}selected{% endif %}>
+            Price: High to Low
+        </option>
+        <option value="name" {% if sort == 'name' %}selected{% endif %}>
+            Name: A-Z
+        </option>
+    </select>
+</form>
+
+
+<div class="products-grid">
+    {% for product in products %}
+        <div class="product-card">
+
+            <img src="{{ product.image.url }}">
+
+            <h3>
+                <a href="{% url 'product_detail' product.slug %}">
+                    {{ product.name }}
+                </a>
+            </h3>
+
+            <p class="price">₹{{ product.price }}</p>
+
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

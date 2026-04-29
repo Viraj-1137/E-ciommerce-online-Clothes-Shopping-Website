@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Your Orders</h2>
+
+{% for order in orders %} <div> <h3>Order #{{ order.id }}</h3> <p>Date: {{ order.created_at }}</p> <p>Total: ₹{{ order.total_amount }}</p>
+
+```
+    <ul>
+    {% for item in order.orderitem_set.all %}
+        <li>
+            {{ item.product.name }} — Qty: {{ item.quantity }}
+        </li>
+    {% endfor %}
+    </ul>
+
+    <hr>
+</div>
+```
+
+{% empty %} <p>No orders yet.</p>
+{% endfor %}
+
+{% endblock %}

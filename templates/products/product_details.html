@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="product-detail">
+
+```
+<div class="product-image">
+    <img src="{{ product.image.url }}">
+</div>
+
+<div class="product-info">
+    <h2 class="product-title">{{ product.name }}</h2>
+
+    <p class="product-price">₹{{ product.price }}</p>
+
+    <p>{{ product.description }}</p>
+
+    <p class="stock">Stock available: {{ product.stock }}</p>
+
+    <a href="{% url 'add_to_cart' product.id %}">
+        <button class="add-cart-btn">Add to Cart</button>
+    </a>
+</div>
+```
+
+</div>
+
+<hr>
+
+<div class="review-section">
+
+```
+<h3>Customer Reviews</h3>
+
+{% if average_rating %}
+    <p class="average-rating">
+        ⭐ {{ average_rating|floatformat:1 }} / 5
+    </p>
+{% endif %}
+
+{% for review in reviews %}
+    <div class="review-card">
+        <strong>{{ review.user.username }}</strong>
+        <span>⭐ {{ review.rating }}/5</span>
+        <p>{{ review.comment }}</p>
+    </div>
+{% empty %}
+    <p>No reviews yet.</p>
+{% endfor %}
+
+<hr>
+
+{% if user.is_authenticated %}
+    <h4>Write a Review</h4>
+    <form method="post" class="review-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="review-btn">Submit Review</button>
+    </form>
+{% else %}
+    <p>Please login to write a review.</p>
+{% endif %}
+```
+
+</div>
+
+{% endblock %}
